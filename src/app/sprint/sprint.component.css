@@ -1,0 +1,152 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 99%;
+}
+  
+td, th {
+    border: 0px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.table-body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 4%;
+}
+
+.add {
+    font-size: 30px;
+    float: right;
+    margin: 0px 2%;
+    cursor: pointer;
+}
+
+.actions {
+    text-align: center;
+}
+
+.actions i {
+    margin: 0px 10%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.a-delete {
+    color: red;
+    cursor: pointer;
+}
+
+.a-update {
+    color: blue;
+    cursor: pointer;
+}
+
+.soCount {
+    border: 1px solid red;
+    background-color: red;
+    border-radius: 50px;
+    padding: 6px;
+    margin-left: 10px;
+    color: white;
+}
+
+.tile {
+    background-color: rgb(193 210 215);
+    padding: 30px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    width: 270px;
+    height: 125px;
+}
+
+.tile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    justify-content: center;
+    height: 100%;
+}
+
+.form-control {
+    width: 14%;
+    margin: 2%;
+    font-size: 14px;
+}
+
+.iterations {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.progress {
+    margin-bottom: 4px;
+    height: 1.5rem;
+}
+
+.glyphicon-chevron-right, .glyphicon-chevron-down {
+    cursor: pointer;
+}
+
+.glyphicon-save, .glyphicon-import {
+    margin-right: 1%;
+    cursor: pointer;
+    outline: 1px solid lightgrey;
+    padding: 8px;
+    border-radius: 4px;
+} 
+
+.glyphicon-filter {
+    margin-right: 5%;
+    cursor: pointer;
+    outline: 1px solid lightgrey;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+#search {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin-right: 5%;
+}
+
+.searchDropdown {
+    width: 25%;
+}
+
+.wordSpacing {
+    word-spacing: -6px;
+}
+
+.storyicon {
+    margin-right: 1%;
+}
+
+.prType {
+    border: 1px solid blue;
+    border-radius: 50px;
+    padding: 6px;
+    margin-left: 10px;
+    color: blue;
+}
+
+.clickable {
+    cursor: pointer;
+}

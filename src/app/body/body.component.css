@@ -1,0 +1,58 @@
+.body {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: row;
+}
+
+.body-left {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #E7E9EB;
+    color: black;
+    padding-left: 2%;
+    padding-top: 2%;
+}
+
+.body-right {
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+}
+
+.body-left a {
+    text-decoration: none;
+    padding: 5% 0px;
+    color: black;
+    cursor: pointer;
+}
+
+app-sprint {
+    width: 100%;
+}
+
+app-quarter {
+    width: 100%;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1%;
+}
+
+.tab {
+    padding: 10px;
+}
+
+.tab a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.tab a:active {
+    color: red;
+}

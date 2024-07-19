@@ -1,0 +1,12 @@
+<section class="tabs">
+    <section class="tab">
+        <a [ngStyle]="{'color': (page === 'quarterly') ? 'red' : 'black'}" id="quarterly" (click)="changePage('quarterly')">Quarterly Metrics</a>
+    </section>
+    <section class="tab">
+        <a [ngStyle]="{'color': (page === 'sprint') ? 'red' : 'black'}" (click)="changePage('sprint')">Sprint Details</a>
+    </section>
+</section>
+<section class="body">
+    <app-quarter *ngIf='page==="quarterly"'></app-quarter>
+    <app-sprint *ngIf='page==="sprint"'></app-sprint>
+</section>

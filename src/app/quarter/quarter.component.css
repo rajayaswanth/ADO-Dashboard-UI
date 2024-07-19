@@ -1,0 +1,95 @@
+.iterations {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.form-control {
+    width: 230px;
+    margin: 2%;
+    font-size: 14px;
+}
+
+.ngb-dp-arrow {
+    padding-right: 0;
+    padding-left: 0;
+    margin: 0;
+    width: 2rem;
+    height: 2rem;
+    display:inline-block;
+}
+
+.ngb-dp-arrow-btn {
+    padding: 0 .25rem;
+    margin: 0 .5rem;
+    border: none;
+    background-color: transparent;
+}
+
+.ngb-dp-navigation-chevron {
+    border-style: solid;
+    border-width: .2em .2em 0 0;
+    display: inline-block;
+    width: .75em;
+    height: .75em;
+    margin-left: -.5em;
+    margin-right: .25em;
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+
+.right .ngb-dp-navigation-chevron {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin-left: .5em;
+    margin-right: .25em;
+}
+
+.selectYear{
+    display: block;
+    width: 100%;
+    padding: .25rem .25rem;
+    clear: both;
+    text-align:center;
+}
+
+.dropdown-item
+{
+  padding:.5rem 0.5rem!important;
+  text-align:center;
+}
+
+.selections {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 2%;
+    flex-wrap: wrap;
+}
+
+.row {
+    margin: 2% 4%;
+}
+
+.chart-area {
+    height: 280px;
+}
+
+.mb-3 {
+    margin-bottom: 0% !important;
+}
+
+.input-group-append .btn, .input-group-prepend .btn {
+    height: calc(1.5em + .75rem + 8px);
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+h3 {
+    display: flex;
+    justify-content: center;
+    padding: 1%;
+}
