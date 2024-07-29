@@ -1,108 +1,109 @@
 <section>
-    
-    <section class="selections">
-      <select [(ngModel)]="selectedTeam" class="form-control" (ngModelChange)="refreshData()">
-        <option *ngFor="let team of teams" [ngValue]="team">{{team}}</option>
-      </select>
-        <div style="width: 230px; margin: 2%; font-size: 14px;">
-            <div class="input-group mb-3">
-                <input style="text-transform: uppercase; border: 1px solid #ced4da; height: calc(1.5em + .75rem + 2px); border-radius: .25rem; padding: .375rem .75rem; width: 90%;" [formControl]="control" placeholder="Qq yyyy" >
-                <div class="input-group-append">
-                    <div ngbDropdown #drop="ngbDropdown" class="d-inline-block" autoClose="outside" placement="bottom-right"
-                        (openChange)="showQuarter=true">
-                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle></button>
-                        <div ngbDropdownMenu>
-                            <div class="selectYear">
-                                <div class="ngb-dp-arrow">
-                                    <button  class="btn btn-link ngb-dp-arrow-btn" type="button" ><span class="ngb-dp-navigation-chevron" (click)="showQuarter?changeYear((year||yearDefault)-1):year10=year10-10"></span></button>
-                                </div>
-            
-                                <button type="button" class="btn btn-link" (click)="changeShowQuarter()">{{showQuarter?year?year:yearDefault:(year10+' - '+(year10+9))}}</button>
-                                <div class="ngb-dp-arrow right">
-                                    <button  class="btn btn-link ngb-dp-arrow-btn" type="button" (click)="showQuarter?changeYear((year||yearDefault)+1):year10=year10+10"><span class="ngb-dp-navigation-chevron"></span></button>
-                                </div>
-                            </div>
-                            <ng-container *ngIf="showQuarter">
-            
-                            <button [ngClass]="{'bg-primary':item.value==quarter}" ngbDropdownItem *ngFor="let item of options" (click)="click(item.value,drop)">
-                            <span class="col" *ngFor="let month of item.months" >{{month}}</span>
-                            </button>
-                            </ng-container>
-                            <ng-container *ngIf="!showQuarter">
-            
-                            <button [ngClass]="{'bg-primary':(year10+item)==year}" ngbDropdownItem *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]" (click)="changeYear(year10+item);showQuarter=true">
-                    <span >{{year10+item}}</span>
-                    </button>
-                            </ng-container>
-                        </div>
-            
-                    </div>
+  <section class="selections">
+    <select [(ngModel)]="selectedTeam" class="form-control" (ngModelChange)="refreshData()">
+      <option *ngFor="let team of teams" [ngValue]="team">{{team}}</option>
+    </select>
+    <div style="width: 230px; margin: 2%; font-size: 14px;">
+      <div class="input-group mb-3">
+        <input
+          style="text-transform: uppercase; border: 1px solid #ced4da; height: calc(1.5em + .75rem + 2px); border-radius: .25rem; padding: .375rem .75rem; width: 90%;"
+          [formControl]="control" placeholder="Qq yyyy">
+        <div class="input-group-append">
+          <div ngbDropdown #drop="ngbDropdown" class="d-inline-block" autoClose="outside" placement="bottom-right"
+            (openChange)="showQuarter=true">
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle></button>
+            <div ngbDropdownMenu>
+              <div class="selectYear">
+                <div class="ngb-dp-arrow">
+                  <button class="btn btn-link ngb-dp-arrow-btn" type="button"><span class="ngb-dp-navigation-chevron"
+                      (click)="showQuarter?changeYear((year||yearDefault)-1):year10=year10-10"></span></button>
                 </div>
-            </div>
-        </div>
-    </section>
-    <section class="content">
-        <div class=" row">
-            <div class=" col-12">
-              <div class=" card card-chart">
-                <div class=" card-header">
-                    <h3 class=" card-category">All Sprints data</h3>
-                    <h4 class=" card-title">
-                      <section>Commit Points - {{totalCommited}}</section>
-                      <section>Completed Points - {{totalCompleted}}</section>
-                      <section>Team Velocity - {{teamVelocity | number : '1.2-2'}}%</section>
-                    </h4>
-                </div>
-                <div class=" card-body">
-                  <div class=" chart-area"><canvas id="chartBig1"> </canvas></div>
+
+                <button type="button" class="btn btn-link"
+                  (click)="changeShowQuarter()">{{showQuarter?year?year:yearDefault:(year10+' - '+(year10+9))}}</button>
+                <div class="ngb-dp-arrow right">
+                  <button class="btn btn-link ngb-dp-arrow-btn" type="button"
+                    (click)="showQuarter?changeYear((year||yearDefault)+1):year10=year10+10"><span
+                      class="ngb-dp-navigation-chevron"></span></button>
                 </div>
               </div>
+              <ng-container *ngIf="showQuarter">
+                <button [ngClass]="{'bg-primary':item.value==quarter}" ngbDropdownItem *ngFor="let item of options"
+                  (click)="click(item.value,drop)">
+                  <span class="col" *ngFor="let month of item.months">{{month}}</span>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="!showQuarter">
+                <button [ngClass]="{'bg-primary':(year10+item)==year}" ngbDropdownItem
+                  *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]" (click)="changeYear(year10+item);showQuarter=true">
+                  <span>{{year10+item}}</span>
+                </button>
+              </ng-container>
             </div>
           </div>
-        <!-- <div class=" row">
-            <div class=" col-lg-4">
-              <div class=" card card-chart">
-                <div class=" card-header">
-                  <h5 class=" card-category">1st Month</h5>
-                  <h3 class=" card-title">
-                    <i class=" tim-icons icon-bell-55 text-danger-states"> </i> 763,215
-                  </h3>
-                </div>
-                <div class=" card-body">
-                  <div class=" chart-area"><canvas id="chartLineRed"> </canvas></div>
-                </div>
-              </div>
-            </div>
-            <div class=" col-lg-4">
-              <div class=" card card-chart">
-                <div class=" card-header">
-                  <h5 class=" card-category">2nd Month</h5>
-                  <h3 class=" card-title">
-                    <i class=" tim-icons icon-delivery-fast text-info"> </i> 3,500€
-                  </h3>
-                </div>
-                <div class=" card-body">
-                  <div class=" chart-area"><canvas id="chartBig1"> </canvas></div>
-                </div>
-              </div>
-            </div>
-            <div class=" col-lg-4">
-              <div class=" card card-chart">
-                <div class=" card-header">
-                  <h5 class=" card-category">3rd Month</h5>
-                  <h3 class=" card-title">
-                    <i class=" tim-icons icon-send text-success"> </i> 12,100K
-                  </h3>
-                </div>
-                <div class=" card-body">
-                  <div class=" chart-area"><canvas id="chartLineGreen"> </canvas></div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-    </section>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class=" row">
+      <div class=" col-12">
+        <div class=" card card-chart">
+          <div class=" card-header">
+            <h3 class=" card-category">All Sprints data</h3>
+            <h4 class=" card-title">
+              <section>Commit Points - {{totalCommited}}</section>
+              <section>Completed Points - {{totalCompleted}}</section>
+              <section>Average Velocity - {{teamVelocity | number : '1.0-0'}} Story Points</section>
+              <section>Average Completion - {{averageCompletionPercentage | number : '1.1-2'}} %</section>
+            </h4>
+          </div>
+          <div class=" card-body">
+            <div class=" chart-area"><canvas id="chartBig1"> </canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=" row">
+      <div *ngFor="let user of users" class=" col-lg-4">
+        <div class=" card card-chart">
+          <div class=" card-header">
+            <h3 class=" card-category">{{user}}</h3>
+            <h4 class=" card-title">
+              <!-- <section>Commit Points - {{totalCommited}}</section> -->
+            </h4>
+          </div>
+          <div class=" card-body">
+            <div class=" chart-area"><canvas id="chartLineRed"> </canvas></div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class=" col-lg-4">
+        <div class=" card card-chart">
+          <div class=" card-header">
+            <h5 class=" card-category">2nd Month</h5>
+            <h3 class=" card-title">
+              <i class=" tim-icons icon-delivery-fast text-info"> </i> 3,500€
+            </h3>
+          </div>
+          <div class=" card-body">
+            <div class=" chart-area"><canvas id="chartBig1"> </canvas></div>
+          </div>
+        </div>
+      </div>
+      <div class=" col-lg-4">
+        <div class=" card card-chart">
+          <div class=" card-header">
+            <h5 class=" card-category">3rd Month</h5>
+            <h3 class=" card-title">
+              <i class=" tim-icons icon-send text-success"> </i> 12,100K
+            </h3>
+          </div>
+          <div class=" card-body">
+            <div class=" chart-area"><canvas id="chartLineGreen"> </canvas></div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </section>
 </section>
-    <!-- <pre>
-    Quarter:{{quarter}}
-    Year:{{year}}
-    </pre> -->

@@ -5,8 +5,12 @@
     <section class="tab">
         <a [ngStyle]="{'color': (page === 'sprint') ? 'red' : 'black'}" (click)="changePage('sprint')">Sprint Details</a>
     </section>
+    <section class="tab">
+        <a [ngStyle]="{'color': (page === 'settings') ? 'red' : 'black'}" (click)="changePage('settings')">User Settings</a>
+    </section>
 </section>
 <section class="body">
     <app-quarter *ngIf='page==="quarterly"'></app-quarter>
     <app-sprint *ngIf='page==="sprint"'></app-sprint>
+    <app-user *ngIf='page==="settings"'></app-user>
 </section>

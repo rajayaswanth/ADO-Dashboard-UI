@@ -1,0 +1,25 @@
+<section>
+    <section class="selections">
+        <select [(ngModel)]="selectedTeam" class="form-control" (ngModelChange)="getUsers()">
+            <option *ngFor="let team of teams" [ngValue]="team">{{team}}</option>
+        </select>
+    </section>
+    <section class="table-body">
+        <table>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>GRC Member</th>
+            </tr>
+            <ng-container *ngFor="let user of users">
+                <tr>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <a (click)="updateUser(user.id)"><ng-toggle [(ngModel)]="user.grc" handleColor="red"></ng-toggle></a>
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+    </section>
+</section>

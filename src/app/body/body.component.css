@@ -37,6 +37,10 @@ app-quarter {
     width: 100%;
 }
 
+app-user {
+    width: 100%;
+}
+
 .tabs {
     display: flex;
     justify-content: space-evenly;

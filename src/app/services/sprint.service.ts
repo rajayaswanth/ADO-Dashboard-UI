@@ -11,7 +11,7 @@ export class SprintService {
   constructor(private httpClient: HttpClient) { }
 
   headers = new HttpHeaders();
-  url = "http://192.168.0.100:9090/";
+  url = "http://localhost:9090/";
 
   public getCurrentSprintDetails(iterationId: String){
     this.headers.set("content-type","application/json");
@@ -21,6 +21,15 @@ export class SprintService {
   public getIterations(teamName: String){
     this.headers.set("content-type","application/json");
     return this.httpClient.get(this.url + "getIterations/" + teamName, { 'headers': this.headers });
+  }
+
+  public getUsersByTeamName(teamName: String){
+    this.headers.set("content-type","application/json");
+    return this.httpClient.get(this.url + "getUsersByTeamName/" + teamName, { 'headers': this.headers });
+  }
+
+  public updateUserByUserId(userId: any){
+    return this.httpClient.patch(this.url + "updateUser/" + userId, {});
   }
 
   public getTeams(){
@@ -40,8 +49,8 @@ export class SprintService {
 
   getQuarterData(teamName: String, startDate: String, endDate: String): Observable<SprintSummary[]> {
     this.headers.set("content-type","application/json");
-    return this.httpClient.get<SprintSummary[]>(this.url + "getCurrentWorkitems/" + teamName + "/start/" + startDate + "/end/" + endDate, { 'headers': this.headers }).pipe(
-      tap(data => console.log('ALL QUARTER DATA: ', JSON.stringify(data))),
+    return this.httpClient.get<SprintSummary[]>(this.url + "getCurrentWorkitems/" + teamName + "/start/" + startDate + "/end/" + endDate, { 'headers': this.headers })
+    .pipe(
       catchError(this.handleError)
     );
   }

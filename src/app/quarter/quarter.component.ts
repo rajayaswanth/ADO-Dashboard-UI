@@ -20,6 +20,9 @@ import { SprintSummary } from '../models/SprintSummary';
 export class QuarterComponent implements OnInit, OnDestroy {
   selectedTeam="360 Operations Artemis";
   teams:any=[];
+  users = new Set();
+  userData = new Map<string, number>();
+  userDetails:any=[];
   alive: boolean = true;
   control: FormControl = new FormControl();
   year = 0;
@@ -43,6 +46,8 @@ export class QuarterComponent implements OnInit, OnDestroy {
   totalCommited = 0;
   totalCompleted = 0;
   teamVelocity = 0.0;
+  averageCompletionPercentage = 0.0;
+  noOfSprints = 0;
 
   options: any[] = [
     { value: 'Q1', months: ['Jan', 'Feb', 'Mar'] },
@@ -85,7 +90,6 @@ export class QuarterComponent implements OnInit, OnDestroy {
           }
         }
       });
-    console.log('test');
   }
 
   changeYear(year:any) {
@@ -125,6 +129,12 @@ export class QuarterComponent implements OnInit, OnDestroy {
     this.alive = false;
   }
 
+  setUsersData(sprintDetails : SprintSummary) {
+    for(var details of sprintDetails.sprintDetails) {
+      this.users.add(details.assignedTo)
+    }
+  }
+
   getQuarterData(startDate:any, endDate:any) {
     this.sprintService.getQuarterData(this.selectedTeam, startDate, endDate).subscribe((data: SprintSummary[]) => {
       this.lables = [];
@@ -134,6 +144,9 @@ export class QuarterComponent implements OnInit, OnDestroy {
       this.totalCommited = 0;
       this.totalCompleted = 0;
       this.teamVelocity = 0.0;
+      this.averageCompletionPercentage = 0.0;
+      this.noOfSprints = 0;
+      this.users.clear();
       
       data.forEach( (element) => {
         this.lables.push(element.sprintName);
@@ -141,12 +154,12 @@ export class QuarterComponent implements OnInit, OnDestroy {
         this.commited.push(element.sprintCommitPoints);
         this.totalCompleted += element.completedPoints;
         this.completed.push(element.completedPoints);
-        // if(element.completedPoints > 0)
-          this.spilled.push(element.sprintCommitPoints - element.completedPoints);
-        // else
-        //   this.spilled.push(0);
+        this.spilled.push(element.sprintCommitPoints - element.completedPoints);
+        this.setUsersData(element);
+        this.noOfSprints = this.noOfSprints + 1;
       });
-      this.teamVelocity = (this.totalCompleted/this.totalCommited) * 100;
+      this.averageCompletionPercentage = (this.totalCompleted/this.totalCommited) * 100;
+      this.teamVelocity = this.totalCompleted/this.noOfSprints;
       this.datasets = [
         this.commited,
         this.completed,
@@ -157,12 +170,12 @@ export class QuarterComponent implements OnInit, OnDestroy {
         chartExist.destroy();
       this.chartData = {
         labels: this.lables,
-            datasets: [{
+        datasets: [{
               label: "Commited Points",
               borderColor: '#0e80f2',
               backgroundColor: '#0e80f2',
               data: this.datasets[0],
-              maxBarThickness: 50,
+              maxBarThickness: 50
             },
             {
               label: "Completed Points",
@@ -170,7 +183,6 @@ export class QuarterComponent implements OnInit, OnDestroy {
               backgroundColor: '#7be506',
               data: this.datasets[1],
               maxBarThickness: 50
-              
             },
             {
               label: "Spilled Points",
@@ -178,8 +190,8 @@ export class QuarterComponent implements OnInit, OnDestroy {
               backgroundColor: '#ec250d',
               data: this.datasets[2],
               maxBarThickness: 50
-              
-            }]
+            }
+        ]
       };
       this.drawChart(this.chartData);
     })
@@ -215,10 +227,6 @@ export class QuarterComponent implements OnInit, OnDestroy {
         plugins: {
           tooltip: {
             enabled: false
-          },
-          title: {
-            display: true,
-            text: 'Sprint Details for a Quarter'
           }
         },
       },

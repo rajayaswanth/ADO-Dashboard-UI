@@ -21,6 +21,7 @@
     "@angular/material": "^17.3.1",
     "@ng-bootstrap/ng-bootstrap": "^17.0.0",
     "@canvasjs/angular-charts": "^1.2.0",
+    "@nth-cloud/ng-toggle": "^11.0.0",
     "chart.js": "^4.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

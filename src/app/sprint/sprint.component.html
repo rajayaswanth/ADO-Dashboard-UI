@@ -1,168 +1,164 @@
-  <section>
-    <div class="iterations">
-      <select [(ngModel)]="selectedTeam" class="form-control" (ngModelChange)="getIterations()">
-        <option *ngFor="let team of teams" [ngValue]="team">{{team}}</option>
-      </select>
-      <select [(ngModel)]="selectedValue" class="form-control" (ngModelChange)="getSprintDetails()">
-        <option *ngFor="let iteration of iterations" [ngValue]="iteration.id">{{iteration.name}} - {{iteration.attributes.timeFrame}}</option>
-      </select>
-      <i class="glyphicon glyphicon glyphicon-save wordSpacing" (click)="downloadSprintData()"> Export</i>
-      <i class="glyphicon glyphicon glyphicon-import wordSpacing" (click)="importSprintData()" *ngIf="showImport"> ADO Import</i>
-      <i class="glyphicon glyphicon glyphicon-filter" (click)="searchData()"></i>
+<section>
+  <div class="iterations">
+    <select [(ngModel)]="selectedTeam" class="form-control" (ngModelChange)="getIterations()">
+      <option *ngFor="let team of teams" [ngValue]="team">{{team}}</option>
+    </select>
+    <select [(ngModel)]="selectedValue" class="form-control" (ngModelChange)="getSprintDetails()">
+      <option *ngFor="let iteration of iterations" [ngValue]="iteration.id">{{iteration.name}} -
+        {{iteration.attributes.timeFrame}}</option>
+    </select>
+    <i class="glyphicon glyphicon glyphicon-save wordSpacing" (click)="downloadSprintData()"> Export</i>
+    <i class="glyphicon glyphicon glyphicon-import wordSpacing" (click)="importSprintData()" *ngIf="showImport"> ADO
+      Import</i>
+    <i class="glyphicon glyphicon glyphicon-filter" (click)="searchData()"></i>
+  </div>
+</section>
+<section>
+  <div class="search" *ngIf="search">
+    <select [(ngModel)]="selectedSearch" class="form-control searchDropdown" (ngModelChange)="searchText()">
+      <option *ngFor="let user of users" [ngValue]="user">{{user}}</option>
+    </select>
+  </div>
+</section>
+<section>
+  <section style="display: flex; margin: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
+    <div (click)="filterByStatus('All')" class="tile clickable">
+      <section class="tile-content">
+        <p>User Stories Count</p>
+        <p>{{userStoriesCount}}</p>
+      </section>
+    </div>
+    <div (click)="filterByStatus('All')" class="tile clickable">
+      <section class="tile-content">
+        <p>Commit Points</p>
+        <p>{{commitPoints}}</p>
+      </section>
+    </div>
+    <div class="tile">
+      <section class="tile-content">
+        <p>Completed Points</p>
+        <p>{{completedPoints}}</p>
+      </section>
+    </div>
+    <div class="tile">
+      <section class="tile-content">
+        <p>Sprint Completion %</p>
+        <div class="progress" style="width: 100%;">
+          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+            [ngStyle]="{width: sprintCompletionPercentage + '%'}">
+            {{sprintCompletionPercentage}}%
+          </div>
+        </div>
+      </section>
+    </div>
+    <div (click)="filterByStatus('In QA')" class="tile clickable">
+      <section class="tile-content">
+        <p>In QA</p>
+        <p *ngIf="inQAStories > 0">{{inQAStories}} Stories - {{inQAPoints}} Points</p>
+        <p *ngIf="inQAStories == 0">-</p>
+      </section>
+    </div>
+    <div (click)="filterByStatus('In Development')" class="tile clickable">
+      <section class="tile-content">
+        <p>In Development</p>
+        <p *ngIf="inDevelopmentStories > 0">{{inDevelopmentStories}} Stories - {{inDevelopmentPoints}} Points</p>
+        <p *ngIf="inDevelopmentStories == 0">-</p>
+      </section>
+    </div>
+    <div (click)="filterByStatus('Blocked')" class="tile clickable">
+      <section class="tile-content">
+        <p>Blocked</p>
+        <p *ngIf="blockedStories > 0">{{blockedStories}} Stories - {{blockedPoints}} Points</p>
+        <p *ngIf="blockedStories == 0">-</p>
+      </section>
+    </div>
+    <div class="tile">
+      <section class="tile-content">
+        <p>Stories Completion %</p>
+        <div class="progress" style="width: 100%;">
+          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+            [ngStyle]="{width: percentage + '%'}">
+            {{percentage}}%
+          </div>
+        </div>
+      </section>
+    </div>
+    <div (click)="filterByStatus('Draft')" class="tile clickable">
+      <section class="tile-content">
+        <p *ngIf="draftPrs > 0">{{draftPrs}} Draft Pr's</p>
+        <p *ngIf="draftPrs == 0">-</p>
+      </section>
+    </div>
+    <div (click)="filterByStatus('active')" class="tile clickable">
+      <section class="tile-content">
+        <p *ngIf="activePrs > 0">{{activePrs}} Active Pr's</p>
+        <p *ngIf="activePrs == 0">-</p>
+      </section>
     </div>
   </section>
-  <section>
-    <div class="search" *ngIf="search">
-      <select [(ngModel)]="selectedSearch" class="form-control searchDropdown" (ngModelChange)="searchText()">
-        <option *ngFor="let user of users" [ngValue]="user">{{user}}</option>
-      </select>
-    </div>
-  </section>
-  <section>
-    <section style="display: flex; margin: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
-      <div (click)="filterByStatus('All')" class="tile clickable">
-        <section class="tile-content">
-          <p>User Stories Count</p>
-          <p>{{userStoriesCount}}</p>
-        </section>
-      </div>
-      <div (click)="filterByStatus('All')" class="tile clickable">
-        <section class="tile-content">
-          <p>Commit Points</p>
-          <p>{{commitPoints}}</p>
-        </section>
-      </div>
-      <div class="tile">
-        <section class="tile-content">
-          <p>Completed Points</p>
-          <p>{{completedPoints}}</p>
-        </section>
-      </div>
-      <div class="tile">
-        <section class="tile-content">
-          <p>Sprint Completion %</p>
-          <div class="progress" style="width: 100%;">
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: sprintCompletionPercentage + '%'}">
-              {{sprintCompletionPercentage}}%
+</section>
+<section class="table-body">
+  <table>
+    <tr>
+      <th></th>
+      <th>User Story</th>
+      <th>Title</th>
+      <th>State</th>
+      <th>Story Points</th>
+      <th>Assigned To</th>
+    </tr>
+    <ng-container *ngFor="let workItem of sprintData.sprintDetails">
+      <tr>
+        <td (click)="workItem.isExpand = !workItem.isExpand">
+          <i *ngIf="!workItem.isExpand" class="glyphicon glyphicon-chevron-right"></i>
+          <i *ngIf="workItem.isExpand" class="glyphicon glyphicon-chevron-down"></i>
+        </td>
+        <td *ngIf="workItem.type === 'Bug'"><i class="fa fa-bug storyicon"></i>{{workItem.userStoryNumber}}</td>
+        <td *ngIf="workItem.type !== 'Bug'"><i class="fa fa-book storyicon"></i>{{workItem.userStoryNumber}}</td>
+        <td style="display: flex;align-items: center;padding: 16px 8px;text-wrap: nowrap;">{{workItem.title}}
+          <sup *ngIf="workItem.prType !== 'Draft' && workItem.prType !== null && workItem.prStatus !== 'completed'"
+            class="prType">{{workItem.prStatus}}</sup>
+          <sup *ngIf="workItem.prType === 'Draft'" class="prType">{{workItem.prType}}</sup>
+          <sup *ngIf="workItem.soCount>0" class="soCount">SO - {{workItem.soCount}}</sup>
+        </td>
+        <td>
+          <div>
+            <div>
+              {{workItem.state}}
             </div>
-         </div>
-        </section>
-      </div>
-      <div (click)="filterByStatus('In QA')" class="tile clickable">
-        <section class="tile-content">
-          <p>In QA</p>
-          <p *ngIf="inQAStories > 0">{{inQAStories}} Stories - {{inQAPoints}} Points</p>
-          <p *ngIf="inQAStories == 0">-</p>
-        </section>
-      </div>
-      <div (click)="filterByStatus('In Development')" class="tile clickable">
-        <section class="tile-content">
-          <p>In Development</p>
-          <p *ngIf="inDevelopmentStories > 0">{{inDevelopmentStories}} Stories - {{inDevelopmentPoints}} Points</p>
-          <p *ngIf="inDevelopmentStories == 0">-</p>
-        </section>
-      </div>
-      <div (click)="filterByStatus('Blocked')" class="tile clickable">
-        <section class="tile-content">
-          <p>Blocked</p>
-          <p *ngIf="blockedStories > 0">{{blockedStories}} Stories - {{blockedPoints}} Points</p>
-          <p *ngIf="blockedStories == 0">-</p>
-        </section>
-      </div>
-      <div class="tile">
-        <section class="tile-content">
-          <p>Stories Completion %</p>
-          <div class="progress" style="width: 100%;">
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: percentage + '%'}">
-              {{percentage}}%
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                [ngStyle]="{width: workItem.completionPercentage + '%'}">
+                {{workItem.completionPercentage}}%
+              </div>
             </div>
-         </div>
-        </section>
-      </div>
-      <div (click)="filterByStatus('Draft')" class="tile clickable">
-        <section class="tile-content">
-          <p *ngIf="draftPrs > 0">{{draftPrs}} Draft Pr's</p>
-          <p *ngIf="draftPrs == 0">-</p>
-        </section>
-      </div>
-      <div (click)="filterByStatus('active')" class="tile clickable">
-        <section class="tile-content">
-          <p *ngIf="activePrs > 0">{{activePrs}} Active Pr's</p>
-          <p *ngIf="activePrs == 0">-</p>
-        </section>
-      </div>
-    </section>
-  </section>
-  <section class="table-body">
-      <table>
-            <tr>
-              <th></th>
-              <th>User Story</th>
-              <th>Title</th>
-              <th>State</th>
-              <th>Story Points</th>
-              <th>Assigned To</th>
-            </tr>
-            <ng-container *ngFor="let workItem of sprintData.sprintDetails">
+          </div>
+        </td>
+        <td>{{workItem.storyPoints}}</td>
+        <td>{{workItem.assignedTo}}</td>
+      </tr>
+      <tr *ngIf="workItem.isExpand">
+        <td colspan="6">
+          <table>
+            <thead>
+              <th>Development Started On</th>
+              <th>PR Raised On</th>
+              <th>DEV Completed Date</th>
+              <th>QA Completed Date</th>
+              <th>Time to develop</th>
+            </thead>
+            <tbody>
               <tr>
-                <td (click)="workItem.isExpand = !workItem.isExpand">
-                  <i *ngIf="!workItem.isExpand" class="glyphicon glyphicon-chevron-right"></i>
-                  <i *ngIf="workItem.isExpand" class="glyphicon glyphicon-chevron-down"></i>
-                </td>
-                <td *ngIf="workItem.type === 'Bug'"><i class="fa fa-bug storyicon"></i>{{workItem.userStoryNumber}}</td>
-                <td *ngIf="workItem.type !== 'Bug'"><i class="fa fa-book storyicon"></i>{{workItem.userStoryNumber}}</td>
-              <td style="display: flex;align-items: center;padding: 16px 8px;text-wrap: nowrap;">{{workItem.title}}
-                <sup *ngIf="workItem.prType !== 'Draft' && workItem.prType !== null && workItem.prStatus !== 'completed'" class="prType">{{workItem.prStatus}}</sup>
-                <sup *ngIf="workItem.prType === 'Draft'" class="prType">{{workItem.prType}}</sup>
-                <sup *ngIf="workItem.soCount>0" class="soCount">SO - {{workItem.soCount}}</sup>
-              </td>
-              <td>
-                <div>
-                  <div>
-                    {{workItem.state}}
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: workItem.completionPercentage + '%'}">
-                      {{workItem.completionPercentage}}%
-                    </div>
-                 </div>
-                </div>
-              </td>
-              <td>{{workItem.storyPoints}}</td>
-              <td>{{workItem.assignedTo}}</td>
+                <td>{{ workItem.devStartDate | date:'medium' }}</td>
+                <td>{{ workItem.prCreatedDate | date:'medium' }}</td>
+                <td>{{ workItem.devCompletedDate | date:'medium' }}</td>
+                <td>{{ workItem.qaCompletedDate | date:'medium' }}</td>
+                <td>{{calculateDiff(workItem.devStartDate, workItem.devCompletedDate)}} days</td>
               </tr>
-              <!-- <div *ngIf="workItem.isExpand">
-                <div>
-                  <p>Development Started On - {{ workItem.devStartDate | date:'medium' }}</p>
-                  <p>PR Raised On - {{ workItem.prCreatedDate | date:'medium' }}</p>
-                  <p>DEV Completed Date - {{ workItem.devCompletedDate | date:'medium' }}</p>
-                </div>
-                <div>
-                
-                </div>
-              </div> -->
-              <tr *ngIf="workItem.isExpand">
-                <td colspan="6">
-                  <table>
-                    <thead>
-                      <th>Development Started On</th>
-                      <th>PR Raised On</th>
-                      <th>DEV Completed Date</th>
-                      <th>QA Completed Date</th>
-                      <th>Time to develop</th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{{ workItem.devStartDate | date:'medium' }}</td>
-                        <td>{{ workItem.prCreatedDate | date:'medium' }}</td>
-                        <td>{{ workItem.devCompletedDate | date:'medium' }}</td>
-                        <td>{{ workItem.qaCompletedDate | date:'medium' }}</td>
-                        <td>{{calculateDiff(workItem.devStartDate, workItem.devCompletedDate)}} days</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </ng-container>
-        </table>
-  </section>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+</section>

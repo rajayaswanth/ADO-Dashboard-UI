@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { UserComponent } from './user/user.component';
+import { NgToggleModule } from '@nth-cloud/ng-toggle';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     HomeComponent,
     BodyComponent,
     SprintComponent,
-    QuarterComponent
+    QuarterComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     ReactiveFormsModule,
     AppRoutingModule,
     NgbModule,
-    CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule,
+    NgToggleModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
