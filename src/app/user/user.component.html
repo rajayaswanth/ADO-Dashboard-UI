@@ -16,7 +16,7 @@
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     <td>
-                        <a (click)="updateUser(user.id)"><ng-toggle [(ngModel)]="user.grc" handleColor="red"></ng-toggle></a>
+                        <a (click)="updateUser(user.id)"><ng-toggle [(ngModel)]="user.grc" onText="Yes" offText="No" handleColor="red"></ng-toggle></a>
                     </td>
                 </tr>
             </ng-container>
