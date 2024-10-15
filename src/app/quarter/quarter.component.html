@@ -65,16 +65,14 @@
       </div>
     </div>
     <div class=" row">
-      <div *ngFor="let user of users" class=" col-lg-4">
+      <div *ngFor="let summary of userDetails" class=" col-lg-4">
         <div class=" card card-chart">
           <div class=" card-header">
-            <h3 class=" card-category">{{user}}</h3>
+            <h3 class=" card-category">{{summary.userName}}</h3>
             <h4 class=" card-title">
-              <!-- <section>Commit Points - {{totalCommited}}</section> -->
+              <section>Completed Points - {{summary.TotalPointsCompleted}}</section>
+              <section>Velocity - {{summary.velocity | number : '1.0-0'}}</section>
             </h4>
-          </div>
-          <div class=" card-body">
-            <div class=" chart-area"><canvas id="chartLineRed"> </canvas></div>
           </div>
         </div>
       </div>

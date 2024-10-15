@@ -11,6 +11,8 @@ import { takeWhile, debounceTime, startWith } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
 import { SprintService } from '../services/sprint.service';
 import { SprintSummary } from '../models/SprintSummary';
+import { UserDetails } from '../models/UserDetails';
+import { UserSummary } from '../models/UserSummary';
 
 @Component({
   selector: 'app-quarter',
@@ -22,7 +24,7 @@ export class QuarterComponent implements OnInit, OnDestroy {
   teams:any=[];
   users = new Set();
   userData = new Map<string, number>();
-  userDetails:any=[];
+  userDetails: UserSummary[] = [];
   alive: boolean = true;
   control: FormControl = new FormControl();
   year = 0;
@@ -129,18 +131,13 @@ export class QuarterComponent implements OnInit, OnDestroy {
     this.alive = false;
   }
 
-  setUsersData(sprintDetails : SprintSummary) {
-    for(var details of sprintDetails.sprintDetails) {
-      this.users.add(details.assignedTo)
-    }
-  }
-
   getQuarterData(startDate:any, endDate:any) {
     this.sprintService.getQuarterData(this.selectedTeam, startDate, endDate).subscribe((data: SprintSummary[]) => {
       this.lables = [];
       this.commited = [];
       this.completed = [];
       this.spilled = [];
+      this.userDetails = [];
       this.totalCommited = 0;
       this.totalCompleted = 0;
       this.teamVelocity = 0.0;
@@ -155,8 +152,29 @@ export class QuarterComponent implements OnInit, OnDestroy {
         this.totalCompleted += element.completedPoints;
         this.completed.push(element.completedPoints);
         this.spilled.push(element.sprintCommitPoints - element.completedPoints);
-        this.setUsersData(element);
         this.noOfSprints = this.noOfSprints + 1;
+        for(var details of element.sprintDetails) {
+          if(this.userDetails.some(summary => summary.userName === details.assignedTo)) {
+            let indexToUpdate = this.userDetails.findIndex(summary => summary.userName === details.assignedTo);
+            var user = new UserSummary();
+            user.userName = this.userDetails[indexToUpdate].userName;
+            if(details.state === "QA Completed" || details.state === "Closed")
+              user.TotalPointsCompleted = details.storyPoints + this.userDetails[indexToUpdate].TotalPointsCompleted;
+            else
+              user.TotalPointsCompleted = this.userDetails[indexToUpdate].TotalPointsCompleted;
+            user.velocity = user.TotalPointsCompleted/this.noOfSprints;
+            this.userDetails[indexToUpdate] = user;
+          } else {
+            var user = new UserSummary();
+            user.userName = details.assignedTo;
+            if(details.state === "QA Completed" || details.state === "Closed")
+              user.TotalPointsCompleted = details.storyPoints;
+            else
+              user.TotalPointsCompleted = 0;
+            user.velocity = user.TotalPointsCompleted/this.noOfSprints;
+            this.userDetails.push(user);
+          }
+        }
       });
       this.averageCompletionPercentage = (this.totalCompleted/this.totalCommited) * 100;
       this.teamVelocity = this.totalCompleted/this.noOfSprints;
